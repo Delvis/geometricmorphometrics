@@ -1,0 +1,29 @@
+
+## Bill Beluske asked (Wed, 9 Jul 2014 04:57:48 -0400) for a way that:
+## "enables the user to visualize landmarks on a 3D surface that is moveable
+## and rotatable"
+
+## Stefan Schlager (Thu, 10 Jul 2014 03:08:38 -0400) provided a simple way to
+## do this in R:
+
+## You can do this easily in R using the package rgl (wire3d, shade3d for meshes)
+## and (points3d, spheres3d) for landmark matrices.
+## Meshes (obj, ply, stl) can be imported using for example the function
+## vcgImport from Rvcg.
+
+## EXAMPLE:
+
+require(Morpho);require(rgl)
+data(nose)
+wire3d(shortnose.mesh,col="white")
+spheres3d(shortnose.lm,col=3)
+
+## Or if you have a mix of semi-landmarks and classic landmarks you can use a wrapper:
+
+require(Morpho)
+data(nose)
+atlas <- createAtlas(shortnose.mesh,
+                     landmarks =shortnose.lm[c(1:5,20:21),],
+                     patch=shortnose.lm[-c(1:5,20:21),])
+plotAtlas(atlas)
+
